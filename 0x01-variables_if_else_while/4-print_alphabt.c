@@ -1,6 +1,6 @@
 #include <stdio.h>
 /**
-  * main: program that prints the alphabet in lowercase, followed by a new line.
+  * main: program prints the alphabet in lowercase, followed by a new line.
   * Print all the letters except q and e
   * only use putchar twice
   * Return: 0
