@@ -3,7 +3,7 @@
 /**
   * main: program prints the alphabet in lowercase, followed by a new line.
   * Print all the letters except q and e
-  * only use putchar twice
+  * You can only use putchar twice
   * Return: 0
   */
 
