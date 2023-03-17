@@ -1,26 +1,36 @@
+
+
 #include <stdio.h>
+
 /**
-  * main: a program prints all possible different combinations of two digits.
-  * Return: 0
-  */
+ * main - program that prints all possible different combinations of two digits
+ * Numbers must be separated by ,followed by a space
+ * The two digits must be different
+ * 01 and 10 are considered the same combination of the two digits 0 and 1
+ * Return: 0
+ */
+
 int main(void)
 {
-	int i;
-	int j;
-
-	for (i = 48; i <= 57; i++)
-	{
-		putchar(i);
-		for (j = 48; j <= 57; j++)
-		{
-			putchar(j);
-			if (i == 48 && j == 57)
-			{
-				continue;
-			}
-			putchar(',');
-			putchar(' ');
-		}
-	}
-	return (0);
+    int n1 = 48;
+    int n2;
+    int com = 44;
+    while (n1 <= 57)
+    {
+        n2 = n1 + 1;
+        while (n2 <= 57)
+        {
+            putchar(n1);
+            putchar(n2);
+            if (n1 != 56 || n2 != 57)
+            {
+                putchar(com);
+                putchar(32);
+            }
+            n2 += 1;
+        }
+        n1 += 1;
+    }
+    putchar('\n');
+    return (0);
 }
