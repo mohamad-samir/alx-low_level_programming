@@ -1,6 +1,6 @@
 #include <stdio.h>
 /**
-  * mian - Write a program that prints the alphabet in lowercase,
+  * mian:  Write a program that prints the alphabet in lowercase,
   * followed by a new line.
   * Return: 0
  */
