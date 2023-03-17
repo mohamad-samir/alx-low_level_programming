@@ -9,7 +9,7 @@ int main(void)
 {
 	int lw = 'a';
 
-		for (; lw <= 'z';lw++)
+		for (; lw <= 'z'; lw++)
 		{
 			if (lw == 'q' || lw == 'e')
 			{
