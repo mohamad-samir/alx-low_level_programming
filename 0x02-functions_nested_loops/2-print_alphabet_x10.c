@@ -1,9 +1,9 @@
 #include "main.h"
 
 /**
- * main - Write a function that prints 10 times the alphabet,
- * in lowercase, followed by a new line.
- * Return 0.
+ * print_alphabet - a function that prints the alphabet, in lowercase
+ *
+ * Return: Always 0 (Succes)
  */
 
 void print_alphabet_x10(void)
