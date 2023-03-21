@@ -1,11 +1,9 @@
 #include "main.h"
 
 /**
- * Description: print_alphabet
- * - a function that prints the alphabet, in lowercase
- *
- * Return: Always 0 (Succes)
+ * print_alphabet_x10 - Prints 10 times the alphabet, in lowercase.
  */
+
 void print_alphabet_x10(void)
 {
 	int i;
