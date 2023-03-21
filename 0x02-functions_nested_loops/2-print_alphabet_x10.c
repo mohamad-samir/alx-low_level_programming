@@ -5,7 +5,6 @@
  *
  * Return: Always 0 (Succes)
  */
-
 void print_alphabet_x10(void)
 {
 	int i;
