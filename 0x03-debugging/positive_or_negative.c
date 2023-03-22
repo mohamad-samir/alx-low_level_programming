@@ -2,8 +2,6 @@
 
 void positive_or_nigative(int n)
 {
-	int n;
-
 	if (n > 0)
 	{
 		printf("%d is positive\n", n);
