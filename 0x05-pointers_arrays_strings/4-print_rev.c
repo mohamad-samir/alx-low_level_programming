@@ -8,7 +8,7 @@ void print_rev(char *s)
 	int length = _strlen(s);
 	for (int i = length - 1; i >= 0; i--)
 	{
-		printf("%c", s[i]);
+		_putchar(s);
 	}
-    printf("\n");
+	_putchar("\n");
 }
