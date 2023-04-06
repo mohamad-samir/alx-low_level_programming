@@ -6,7 +6,7 @@
  */
 int is_palindrome(char *s)
 {
-	return (pali(s, s + _strlen_recursion(s) - 1));
+	return (check_pal(s, s + _strlen_recursion(s) - 1));
 }
 /**
  * pali - is palindrome
@@ -21,7 +21,7 @@ int pali(char *s, char *e)
 	else if (s >= e)
 		return (1);
 	else
-		return (pali(s + 1, e - 1));
+		return (check_pal(s + 1, e - 1));
 }
 
 /**
