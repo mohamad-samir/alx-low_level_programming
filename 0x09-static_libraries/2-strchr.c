@@ -1,21 +1,23 @@
 #include "main.h"
-#include <stddef.h>
 
 /**
- * _strchr - Entry point
- * @s: input
- * @c: input
- * Return: Always 0 (Success)
+ * *_strchr - fills memory with a constant byte.
+ * @s: pointer to put the constant
+ * @c: constant
+ * Return: pointer to s
  */
+
 char *_strchr(char *s, char c)
 {
-	int i = 0;
+	int itr;
 
-	for (; s[i] >= '\0'; i++)
+	for (itr = 0; s[itr] >= '\0'  ; itr++)
 	{
-		if (s[i] == c)
-			return (&s[i]);
+		if (s[itr] == c)
+		{
+			return (s + itr);
+		}
 	}
-	return (0);
-}
 
+	return ('\0');
+}
