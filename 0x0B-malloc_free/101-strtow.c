@@ -1,11 +1,6 @@
-#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-/**
- * wrdcnt - counts the number of words in a string
- * @s: string to count
- *
- * Return: int of number of words
- */
 int wrdcnt(char *s)
 {
 	int i, n = 0;
@@ -24,12 +19,6 @@ int wrdcnt(char *s)
 	return (n);
 }
 
-/**
- * strtow - splits a string into words
- * @str: string to split
- *
- * Return: pointer to an array of strings
- */
 char **strtow(char *str)
 {
 	int i, j, k, l, n = 0, wc = 0;
@@ -72,4 +61,28 @@ char **strtow(char *str)
 			i++;
 	}
 	return (w);
+}
+
+void print_tab(char **tab)
+{
+    int i;
+
+    for (i = 0; tab[i]; ++i)
+    {
+        printf("%s\n", tab[i]);
+    }
+}
+
+int main(void)
+{
+    char **tab;
+
+    tab = strtow("      ALX School         #cisfun      ");
+    if (tab == NULL)
+    {
+        printf("Failed\n");
+        return (1);
+    }
+    print_tab(tab);
+    return (0);
 }
