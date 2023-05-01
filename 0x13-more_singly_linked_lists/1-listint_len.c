@@ -4,16 +4,16 @@
  * listint_len - prints a linked lists
  * @h: pointer to first node
  *
- * Return: size of list
+ * Return: counter of the size of the list
  */
 size_t listint_len(const listint_t *h)
 {
-	size_t i = 0;
+	size_t counter = 0;
 
 	while (h)
 	{
 		h = h->next;
-		i++;
+		counter++;
 	}
-	return (i);
+	return (counter);
 }
