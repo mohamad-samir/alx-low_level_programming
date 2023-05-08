@@ -1,107 +1,59 @@
+#include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+#include <errno.h>
 
-#define BUF_SIZE 64
+#define BUFFER_SIZE 1024
 
-int main(int argc, char **argv)
-{
-	int fd;
-	unsigned char buf[BUF_SIZE];
+void print_usage(char *program_name) {
+	dprintf(STDERR_FILENO, "Usage: %s file_from file_to\n", program_name);
+}
 
-	if (argc != 2)
-	{
-		fprintf(stderr, "Usage: %s elf_filename\n", argv[0]);
-		exit(98);
+void print_error(char *error_message, char *filename) {
+	dprintf(STDERR_FILENO, "Error: %s %s\n", error_message, filename);
+}
+
+int main(int argc, char *argv[]) {
+	int file_from, file_to, bytes_read, bytes_written, close_from, close_to;
+	char buffer[BUFFER_SIZE];
+
+	if (argc != 3) {
+		print_usage(argv[0]);
+		return 97;
 	}
 
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		fprintf(stderr, "Error: cannot open file '%s'\n", argv[1]);
-		exit(98);
+	file_from = open(argv[1], O_RDONLY);
+	if (file_from == -1) {
+		print_error("Can't read from file", argv[1]);
+		return 98;
 	}
 
-	if (read(fd, buf, BUF_SIZE) != BUF_SIZE)
-	{
-		fprintf(stderr, "Error: cannot read file '%s'\n", argv[1]);
-		exit(98);
+	file_to = open(argv[2], O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (file_to == -1) {
+		print_error("Can't write to", argv[2]);
+		return 99;
 	}
 
-	// Check for magic number
-	if (buf[0] != 0x7f || buf[1] != 'E' || buf[2] != 'L' || buf[3] != 'F')
-	{
-		fprintf(stderr, "Error: file '%s' is not an ELF file\n", argv[1]);
-		exit(98);
+	while ((bytes_read = read(file_from, buffer, BUFFER_SIZE)) > 0) {
+		bytes_written = write(file_to, buffer, bytes_read);
+		if (bytes_written != bytes_read) {
+			print_error("Write error to", argv[2]);
+			return 99;
+		}
 	}
 
-	// Parse the ELF header fields
-	printf("ELF Header:\n");
-
-	// Class
-	printf("  Class:                             ");
-	if (buf[4] == 1)
-		printf("ELF32\n");
-	else if (buf[4] == 2)
-		printf("ELF64\n");
-	else
-		printf("<unknown>\n");
-
-	// Data encoding
-	printf("  Data:                              ");
-	if (buf[5] == 1)
-		printf("2's complement, little endian\n");
-	else if (buf[5] == 2)
-		printf("2's complement, big endian\n");
-	else
-		printf("<unknown>\n");
-
-	// Version
-	printf("  Version:                           %d (current)\n", buf[6]);
-
-	// OS/ABI
-	printf("  OS/ABI:                            ");
-	switch (buf[7])
-	{
-		case 0:
-			printf("UNIX - System V\n");
-			break;
-		case 3:
-			printf("UNIX - GNU\n");
-			break;
-		default:
-			printf("<unknown>\n");
-			break;
+	if (bytes_read == -1) {
+		print_error("Read error from", argv[1]);
+		return 98;
 	}
 
-	// ABI version
-	printf("  ABI Version:                       %d\n", buf[8]);
-
-	// Type
-	printf("  Type:                              ");
-	switch (*(short *)(buf + 16))
-	{
-		case 1:
-			printf("REL (Relocatable file)\n");
-			break;
-		case 2:
-			printf("EXEC (Executable file)\n");
-			break;
-		case 3:
-			printf("DYN (Shared object file)\n");
-			break;
-		case 4:
-			printf("CORE (Core file)\n");
-			break;
-		default:
-			printf("<unknown>\n");
-			break;
+	close_from = close(file_from);
+	close_to = close(file_to);
+	if (close_from == -1 || close_to == -1) {
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", close_from == -1 ? file_from : file_to);
+		return 100;
 	}
 
-	// Entry point address
-	printf("  Entry point address:               0x%x\n", *(unsigned int *)(buf + 24));
-
-	close(fd);
 	return 0;
 }
