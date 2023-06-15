@@ -25,5 +25,5 @@ int sum_dlistint(dlistint_t *head)
 		current_node = current_node->next;
 	}
 
-	return sum;
+	return (sum);
 }
