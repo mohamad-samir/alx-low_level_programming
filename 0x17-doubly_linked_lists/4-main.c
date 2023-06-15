@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include "lists.h"
 #include "4-free_dlistint.c"
+#include "3-add_dnodeint_end.c"
+#include "0-print_dlistint.c"
 
 /**
  * main - check the code
