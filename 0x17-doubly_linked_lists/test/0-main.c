@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
-#include "lists.h"
-#include "0-print_dlistint.c"
+#include "../lists.h"
+#include "../0-print_dlistint.c"
 
 /**
  * main - check the code

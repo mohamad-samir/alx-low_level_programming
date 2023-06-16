@@ -1,39 +1,43 @@
 #include "lists.h"
+
 /**
- * insert_dnodeint_at_index - Insert a node in the postion
- * @h: Pointer to direction of the head
- * @n: The data integer
- * @idx: Position at the insert the new node
- * Return: The direction of the new node
+ * insert_dnodeint_at_index - Inserts a node at a specific position in a doubly linked list
+ * @h: Pointer to a pointer to the head of the list
+ * @n: The data value for the new node
+ * @idx: The index at which the new node should be inserted
+ * Return: Pointer to the new node on success, NULL on failure
  */
 dlistint_t *insert_dnodeint_at_index(dlistint_t **h, unsigned int idx, int n)
 {
-	dlistint_t *new_mem, *res_mem = *h;
-	/* unsigned int counter = 0 */
+	dlistint_t *new_node, *current = *h;
 
-	if (idx == 0)
+	if (idx == 0) /* Insert at the beginning */
 		return (add_dnodeint(h, n));
 
-	for (; idx != 1; idx--)
+	/* Traverse to the node at position idx - 1 */
+	while (idx > 1)
 	{
-		if (res_mem == NULL)
+		if (current == NULL)
 			return (NULL);
-		res_mem = res_mem->next;
+		current = current->next;
+		idx--;
 	}
 
-	if (res_mem->next == NULL)
-		return (add_dnodeint_end(h, n));
-
-	new_mem = malloc(sizeof(dlistint_t));
-
-	if (new_mem == NULL)
+	if (current == NULL) /* Invalid position */
 		return (NULL);
 
-	new_mem->n = n;
-	new_mem->next = res_mem->next;
-	new_mem->prev = res_mem;
-	res_mem->next->prev = new_mem;
-	res_mem->next = new_mem;
+	if (current->next == NULL) /* Insert at the end */
+		return (add_dnodeint_end(h, n));
 
-	return (new_mem);
+	new_node = malloc(sizeof(dlistint_t));
+	if (new_node == NULL)
+		return (NULL);
+
+	new_node->n = n;
+	new_node->next = current->next;
+	new_node->prev = current;
+	current->next->prev = new_node;
+	current->next = new_node;
+
+	return (new_node);
 }
