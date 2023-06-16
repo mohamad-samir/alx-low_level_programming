@@ -1,62 +1,44 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include <stdlib.h>
 
 /**
- * is_palindrome - Check if a string is a palindrome
- * @str: The string to check
- * Return: 1 if palindrome, 0 otherwise
+ * main - generate a key depending on a username for crackme5
+ * @argc: number of arguments passed
+ * @argv: arguments passed to main
+ * Return: 0 on success, 1 on error
  */
-int is_palindrome(char *str)
+int main(int argc, char *argv[])
 {
-	int i, len;
+	unsigned int i, b;
+	size_t len, add;
+	char *l = "A-CHRDw87lNS0E9B2TibgpnMVys5XzvtOGJcYLU+4mjW6fxqZeF3Qa1rPhdKIouk";
+	char p[7] = "      ";
 
-	len = strlen(str);
-	for (i = 0; i < len / 2; i++)
+	if (argc != 2)
 	{
-		if (str[i] != str[len - i - 1])
-			return (0);
+		printf("Correct usage: ./keygen5 username\n");
+		return (1);
 	}
-	return (1);
-}
-
-/**
- * main - check the code
- *
- * Return: Always EXIT_SUCCESS.
- */
-
-int main(void)
-{
-	int largest_palindrome = 0;
-	int factor1 = 0, factor2 = 0;
-
-	for (int i = 100; i <= 999; i++)
-	{
-		for (int j = i; j <= 999; j++)
-		{
-			int product = i * j;
-			char str[7];
-
-			sprintf(str, "%d", product);
-
-			if (is_palindrome(str) && product > largest_palindrome)
-			{
-				largest_palindrome = product;
-				factor1 = i;
-				factor2 = j;
-			}
-		}
-	}
-
-	/*Write the largest palindrome to the file "102-result"*/
-	FILE *file = fopen("102-result", "w");
-
-	if (file != NULL)
-	{
-		fprintf(file, "%d", largest_palindrome);
-		fclose(file);
-	}
-
+	len = strlen(argv[1]);
+	p[0] = l[(len ^ 59) & 63];
+	for (i = 0, add = 0; i < len; i++)
+		add += argv[1][i];
+	p[1] = l[(add ^ 79) & 63];
+	for (i = 0, b = 1; i < len; i++)
+		b *= argv[1][i];
+	p[2] = l[(b ^ 85) & 63];
+	for (b = argv[1][0], i = 0; i < len; i++)
+		if ((char)b <= argv[1][i])
+			b = argv[1][i];
+	srand(b ^ 14);
+	p[3] = l[rand() & 63];
+	for (b = 0, i = 0; i < len; i++)
+		b += argv[1][i] * argv[1][i];
+	p[4] = l[(b ^ 239) & 63];
+	for (b = 0, i = 0; (char)i < argv[1][0]; i++)
+		b = rand();
+	p[5] = l[(b ^ 229) & 63];
+	printf("%s\n", p);
 	return (0);
 }
