@@ -230,24 +230,24 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
  */
 char *shash_table_get(const shash_table_t *ht, const char *key)
 {
-    unsigned long int index;
-    shash_node_t *node;
+	unsigned long int index;
+	shash_node_t *node;
 
-    if (ht == NULL || key == NULL)
-        return (NULL);
+	if (ht == NULL || key == NULL)
+		return (NULL);
 
-    index = key_index((unsigned char *)key, ht->size);
-    node = ht->array[index];
+	index = key_index((unsigned char *)key, ht->size);
+	node = ht->array[index];
 
-    while (node != NULL)
-    {
-        if (strcmp(node->key, key) == 0)
-            return (node->value);
+	while (node != NULL)
+	{
+		if (strcmp(node->key, key) == 0)
+			return (node->value);
 
-        node = node->next;
-    }
+		node = node->next;
+	}
 
-    return (NULL);
+	return (NULL);
 }
 
 /**
