@@ -40,14 +40,27 @@ shash_node_t *set_spair(const char *key, const char *value)
 
 	if (node == NULL)
 		return (NULL);
-	node->key = malloc(strlen(key) + 1);
-	if (node->key == NULL)
+
+	size_t key_length = strlen(key);
+	size_t value_length = strlen(value);
+
+	node->key = malloc(key_length + 1);
+	node->value = malloc(value_length + 1);
+
+	if (node->key == NULL || node->value == NULL)
+	{
+		free(node->key);
+		free(node->value);
+		free(node);
 		return (NULL);
-	node->value = malloc(strlen(value) + 1);
-	if (node->value == NULL)
-		return (NULL);
-	strcpy(node->key, key);
-	strcpy(node->value, value);
+	}
+
+	strncpy(node->key, key, key_length);
+	node->key[key_length] = '\0';
+
+	strncpy(node->value, value, value_length);
+	node->value[value_length] = '\0';
+
 	return (node);
 }
 
@@ -61,7 +74,7 @@ shash_node_t *set_spair(const char *key, const char *value)
  * Return: the node, or NULL if failed.
  */
 shash_node_t *set_spair_only(shash_table_t *ht, const char *key,
-				 const char *value, unsigned long int index)
+							 const char *value, unsigned long int index)
 {
 	shash_node_t *node = set_spair(key, value);
 
@@ -101,7 +114,7 @@ int update_value(shash_node_t *node, const char *value)
  * Return: the new node, or NULL if failed.
  */
 shash_node_t *set_spair_front(shash_table_t *ht, const char *key,
-				 const char *value, unsigned long int index)
+							  const char *value, unsigned long int index)
 {
 	shash_node_t *node = set_spair(key, value);
 
@@ -181,7 +194,7 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 
 	if (key == NULL || ht == NULL)
 		return (0);
-/* set the item in the table */
+	/* set the item in the table */
 	index = key_index((unsigned char *)key, ht->size);
 	node = ht->array[index];
 	if (node == NULL)
@@ -198,7 +211,7 @@ int shash_table_set(shash_table_t *ht, const char *key, const char *value)
 	}
 	if (node == NULL)
 		return (0);
-/* arrange the item in the sorted linked list */
+	/* arrange the item in the sorted linked list */
 	if (ht->shead == NULL)
 		return (slist_set_first(ht, node));
 	curr_old_node = ht->shead;
