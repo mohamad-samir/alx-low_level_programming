@@ -1,12 +1,3 @@
-#include "hash_tables.h"
-
-/**
- * hash_table_get - retrieves a value associated with a key.
- * @ht: a pointer to the hash table array.
- * @key: the key, a string that cannot be empty.
- *
- * Return: the value associated with the key, or NULL if key can't be found.
- */
 #include <stdlib.h>
 #include <string.h>
 #include "hash_tables.h"
