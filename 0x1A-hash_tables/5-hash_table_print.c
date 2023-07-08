@@ -4,27 +4,27 @@
  * hash_table_print - prints key/value pairs in hash table array order.
  * @ht: the hash table.
  */
+
 void hash_table_print(const hash_table_t *ht)
 {
-	unsigned long int i, count = 0;
 	hash_node_t *node;
+	unsigned long int i;
+	int first = 1;
 
 	if (ht == NULL)
 		return;
+
 	printf("{");
 	for (i = 0; i < ht->size; i++)
 	{
-		if (ht->array[i] != NULL)
+		node = ht->array[i];
+		while (node != NULL)
 		{
-			node = ht->array[i];
-			while (node != NULL)
-			{
-				if (count > 0)
-					printf(", ");
-				printf("'%s': '%s'", node->key, node->value);
-				node = node->next;
-				count++;
-			}
+			if (!first)
+				printf(", ");
+			printf("'%s': '%s'", node->key, node->value);
+			first = 0;
+			node = node->next;
 		}
 	}
 	printf("}\n");
