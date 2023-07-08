@@ -8,23 +8,23 @@
  */
 shash_table_t *shash_table_create(unsigned long int size)
 {
+	unsigned int i = 0;
 	shash_table_t *ht = malloc(sizeof(shash_table_t));
 
 	if (ht == NULL)
-		return NULL;
-
+		return (NULL);
 	ht->size = size;
 	ht->shead = NULL;
 	ht->stail = NULL;
-
-	ht->array = calloc(size, sizeof(shash_node_t *));
+	ht->array = malloc(sizeof(shash_node_t *) * size);
 	if (ht->array == NULL)
 	{
 		free(ht);
-		return NULL;
+		return (NULL);
 	}
-
-	return ht;
+	for (; i < size; i++)
+		ht->array[i] = NULL;
+	return (ht);
 }
 
 /**
@@ -61,7 +61,7 @@ shash_node_t *set_spair(const char *key, const char *value)
  * Return: the node, or NULL if failed.
  */
 shash_node_t *set_spair_only(shash_table_t *ht, const char *key,
-				 const char *value, unsigned long int index)
+			     const char *value, unsigned long int index)
 {
 	shash_node_t *node = set_spair(key, value);
 
@@ -101,7 +101,7 @@ int update_value(shash_node_t *node, const char *value)
  * Return: the new node, or NULL if failed.
  */
 shash_node_t *set_spair_front(shash_table_t *ht, const char *key,
-				 const char *value, unsigned long int index)
+			     const char *value, unsigned long int index)
 {
 	shash_node_t *node = set_spair(key, value);
 
