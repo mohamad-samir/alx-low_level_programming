@@ -74,12 +74,12 @@ shash_node_t *set_spair_only(shash_table_t *ht, const char *key,
 	shash_node_t *node = set_spair(key, value);
 
 	if (node == NULL)
-		return NULL;
+		return (NULL);
 
 	node->next = NULL;
 	ht->array[index] = node;
 
-	return node;
+	return (node);
 }
 
 /**
