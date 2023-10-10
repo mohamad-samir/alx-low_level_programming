@@ -1,29 +1,26 @@
 #include "search_algos.h"
 
 /**
-* linear_search - Linear search algorithm on an array of integers.
- * @array: Integer array to be searched
- * @size: The size of the array
- * @value: The value to search for
+ * linear_search - searches for a value in an array of
+ * integers using the Linear search algorithm
  *
- * Return: The first index where the value is located or -1 if not found.
-*/
-
+ * @array: input array
+ * @size: size of the array
+ * @value: value to search in
+ * Return: Always EXIT_SUCCESS
+ */
 int linear_search(int *array, size_t size, int value)
 {
-	size_t u;
+	int i;
 
 	if (array == NULL)
 		return (-1);
 
-	for (u = 0; u < size; u++)
+	for (i = 0; i < (int)size; i++)
 	{
-		printf("Value checked array[%ld] = [%d]\n", u, array[u]);
-		if (array[u] == value)
-		{
-			return (u);
-		}
+		printf("Value checked array[%u] = [%d]\n", i, array[i]);
+		if (value == array[i])
+			return (i);
 	}
-
 	return (-1);
 }
